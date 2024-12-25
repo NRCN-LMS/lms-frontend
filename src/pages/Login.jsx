@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/tabs"
 import { useState } from "react"
 
+
 const Login = () => {
     const [signUpInput, setSignUpInput] = useState({ name: "", email: "", password: "" });
     const [loginInput, setLoginInput] = useState({ email: "", password: "" });
@@ -28,6 +29,11 @@ const Login = () => {
         } else {
             setLoginInput({ ...loginInput, [name]: value })
         }
+    };
+
+    const handlerRegistration = (type) => {
+        const inputData = type === "signup" ? signUpInput : loginInput;
+        console.log(inputData);
     }
     return (
         <div className="flex items-center w-full justify-center">
@@ -47,19 +53,19 @@ const Login = () => {
                         <CardContent className="space-y-2">
                             <div className="space-y-1">
                                 <Label htmlFor="name">Name</Label>
-                                <Input type="text" name="name" value={signUpInput.name} onChange={changeInputHandle} placeholder="eg. Arun" required="true" />
+                                <Input type="text" name="name" value={signUpInput.name} onChange={(e) => changeInputHandle(e, "signup")} placeholder="eg. Arun" required="true" />
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="username">Email</Label>
-                                <Input type="email" name="email" value={signUpInput.email} onChange={changeInputHandle} placeholder="Your Email @" required="true" />
+                                <Input type="email" name="email" value={signUpInput.email} onChange={(e) => changeInputHandle(e, "signup")} placeholder="Your Email @" required="true" />
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="username">Password</Label>
-                                <Input type="password" name="password" value={signUpInput.password} onChange={changeInputHandle} placeholder="******" required="true" />
+                                <Input type="password" name="password" value={signUpInput.password} onChange={(e) => changeInputHandle(e, "signup")} placeholder="******" required="true" />
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button>Register</Button>
+                            <Button onClick={()=>handlerRegistration("signup")}>Register</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
@@ -73,16 +79,16 @@ const Login = () => {
                         </CardHeader>
                         <CardContent className="space-y-2">
                             <div className="space-y-1">
-                                <Label htmlFor="current">Register Email</Label>
-                                <Input text="email" name="email" value={loginInput.email} onChange={changeInputHandle} placeholder="please Enter the Email" required="true" />
+                                <Label htmlFor="current">Registered Email</Label>
+                                <Input text="email" name="email" value={loginInput.email} onChange={(e) => changeInputHandle(e, "login")} placeholder="please Enter the Email" required="true" />
                             </div>
                             <div className="space-y-1">
-                                <Label htmlFor="new">Password</Label>
-                                <Input text="password" name="password" value={loginInput.email} onChange={changeInputHandle} placeholder="******" required="true" />
+                                <Label htmlFor="password">Password</Label>
+                                <Input text="password" name="password" value={loginInput.password} onChange={(e) => changeInputHandle(e, "login")} placeholder="******" required="true" />
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button>Login</Button>
+                            <Button onClick={()=>handlerRegistration("login")}>Login</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
