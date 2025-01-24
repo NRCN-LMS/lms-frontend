@@ -9,18 +9,25 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+
 import {
     Tabs,
     TabsContent,
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { useState } from "react"
+import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi"
+import { Loader2 } from "lucide-react"
+import { useEffect, useState } from "react"
+import {toast}  from "sonner"
 
 
 const Login = () => {
     const [signUpInput, setSignUpInput] = useState({ name: "", email: "", password: "" });
     const [loginInput, setLoginInput] = useState({ email: "", password: "" });
+
+    const [registerUser, { data: registerData, error: registerError, isLoading: registerIsLoading, isSuccess: registerIsSuccess }] = useRegisterUserMutation();
+    const [loginUser, { data: loginData, error: loginError, isLoading: loginIsLoading, isSuccess: loginIsSuccess }] = useLoginUserMutation();
 
     const changeInputHandle = (e, type) => {
         const { name, value } = e.target;
@@ -31,12 +38,29 @@ const Login = () => {
         }
     };
 
-    const handlerRegistration = (type) => {
+    const handlerRegistration = async (type) => {
         const inputData = type === "signup" ? signUpInput : loginInput;
-        console.log(inputData);
+        const action = type === "signup" ? registerUser : loginUser;
+        await action(inputData);
+       
+
     }
+    useEffect(()=>{
+        if(registerIsSuccess && registerData){
+            toast.success(registerData.message || "Register Successfully")
+        }
+        if(registerError){
+            toast.error(registerData.data.message || "Register Failed")
+        }
+        if(loginIsSuccess && loginData){
+            toast.success(loginData.message || "Login Successfully")
+        }
+        if(loginError){
+            toast.error(loginData.data.message || "login Failed")
+        }
+    },[loginIsLoading,registerIsLoading,loginData,registerData,loginError,registerError])
     return (
-        <div className="flex items-center w-full justify-center">
+        <div className="flex items-center w-full justify-center mt-20">
             <Tabs defaultValue="account" className="w-[400px]">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="signup">SignUp</TabsTrigger>
@@ -65,7 +89,18 @@ const Login = () => {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button onClick={()=>handlerRegistration("signup")}>Register</Button>
+                            <Button disabled={registerIsLoading} onClick={() => handlerRegistration("signup")}>
+                                {
+                                    registerIsLoading ? (
+
+                                        <>
+                                            <Loader2 className="mr-2 h-4  2-4 animate-spin" />please wait
+
+                                        </>
+                                    ) : "please Register"
+
+                                }
+                            </Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
@@ -88,7 +123,15 @@ const Login = () => {
                             </div>
                         </CardContent>
                         <CardFooter>
-                            <Button onClick={()=>handlerRegistration("login")}>Login</Button>
+                            <Button disabled={loginIsLoading} onClick={() => handlerRegistration("login")}>
+                                {
+                                    loginIsLoading ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4  2-4 animate-spin" />Please wait
+                                        </>
+                                    ) :
+                                        "Login"
+                                }</Button>
                         </CardFooter>
                     </Card>
                 </TabsContent>
