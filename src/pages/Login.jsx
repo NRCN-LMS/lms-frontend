@@ -10,6 +10,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+
 import {
     Tabs,
     TabsContent,
@@ -19,6 +20,7 @@ import {
 import { useLoginUserMutation, useRegisterUserMutation } from "@/features/api/authApi"
 import { Loader2 } from "lucide-react"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import {toast}  from "sonner"
 
 
@@ -28,7 +30,7 @@ const Login = () => {
 
     const [registerUser, { data: registerData, error: registerError, isLoading: registerIsLoading, isSuccess: registerIsSuccess }] = useRegisterUserMutation();
     const [loginUser, { data: loginData, error: loginError, isLoading: loginIsLoading, isSuccess: loginIsSuccess }] = useLoginUserMutation();
-
+    const navigate = useNavigate();
     const changeInputHandle = (e, type) => {
         const { name, value } = e.target;
         if (type === "signup") {
@@ -48,12 +50,15 @@ const Login = () => {
     useEffect(()=>{
         if(registerIsSuccess && registerData){
             toast.success(registerData.message || "Register Successfully")
+            navigate("/login");
         }
         if(registerError){
             toast.error(registerData.data.message || "Register Failed")
         }
         if(loginIsSuccess && loginData){
             toast.success(loginData.message || "Login Successfully")
+          
+
         }
         if(loginError){
             toast.error(loginData.data.message || "login Failed")

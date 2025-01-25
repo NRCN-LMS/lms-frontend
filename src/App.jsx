@@ -4,6 +4,7 @@ import HeroSection from "./pages/formar/HeroSection";
 import Login from "./pages/Login";
 import MainLayout from "./layout/MainLayout";
 import { RouterProvider } from "react-router";
+import Animals from "./pages/formar/Animals";
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -14,6 +15,7 @@ const appRouter = createBrowserRouter([
         element: (
           <>
             <HeroSection />
+            <Animals/>
           </>
         ),
       },

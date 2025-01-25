@@ -26,11 +26,12 @@ import {
 } from "@/components/ui/sheet"
 import Logo from './../assets/logo.png'
 
+
 const Navbar = () => {
   const user = true;
  
   return (
-    <div className="h-16 dark:bg-[#0A0A0A0A] duration-300 z-0 bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 right-0 left-0">
+    <div className="h-16 dark:bg-[#0A0A0A0A] duration-300 z-30 bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 right-0 left-0">
       <div className="max-w-7xl mx-auto hidden md:flex justify-between items-center gap-10 h-full">
         <div className="flex items-center gap-2">
          <img src={Logo}  width="5%" />
@@ -38,6 +39,10 @@ const Navbar = () => {
             PashuParni
           </h1>
         </div>
+      <div>
+        
+      </div>
+
         <div className="flex items-center gap-8">
           {user ? (
             <DropdownMenu>
