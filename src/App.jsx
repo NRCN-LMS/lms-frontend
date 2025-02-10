@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import MainLayout from "./layout/MainLayout";
 import { RouterProvider } from "react-router";
 import Animals from "./pages/formar/Animals";
+import BuyedAnimals from "./pages/formar/BuyedAnimals";
+import Profile from "./pages/formar/Profile";
 const appRouter = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +24,13 @@ const appRouter = createBrowserRouter([
       {
         path:"/login",
         element:<Login/>
+      },
+      {
+        path:"/buyed-animals",
+        element:<BuyedAnimals/>
+      },{
+        path:"/profile",
+        element:<Profile/>
       }
     ],
   },

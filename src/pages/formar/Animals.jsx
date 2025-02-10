@@ -2,19 +2,22 @@ import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import AnimalsList from "./AnimalsList";
 
+const animals = [1,2,3,4]
+
 const Animals = () => {
+  
   const isLoading = false;
   return (
     <div className="bg-gray-300">
       <div className="max-w-7xl mx-auto p-6">
         <h2 className="font-bold text-3xl text-center mb-10">Our animals</h2>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {isLoading ? (
             Array.from({ length: 6 }).map((_, index) => (
               <AnimalSkleton key={index} />
             ))
           ) : (
-            <AnimalsList />
+            animals.map((item,index)=>(<AnimalsList key={index} />))  
           )}
         </div>
       </div>
