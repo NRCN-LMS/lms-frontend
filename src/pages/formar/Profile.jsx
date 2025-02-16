@@ -15,9 +15,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 
+import AnimalsList from "./AnimalsList";
+
 const Profile = () => {
 
     const isLoading = true;
+    const purchased_animals=[]
   return (
     <div className="max-w-4xl mx-auto my-24 px-4">
       <h1 className="font-bold text-2xl text-center md:text-left">Profile</h1>
@@ -81,7 +84,6 @@ const Profile = () => {
                   <Input type="file" accept="image/*" className="col-span-3" />
                 </div>
                             
-
               </div>
               <DialogFooter>
           <Button disabled={isLoading}>{
@@ -101,6 +103,19 @@ const Profile = () => {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+        </div>
+      </div>
+      <div>
+        <h1 className="font-medium text-lg">Animals Purchased History</h1>
+        <div className="grid grid-cols-1 sd:grid-cols-2 md:grid-cols-3 gap-4 my-5">
+        {
+           purchased_animals.length === 0 ?
+            <h1> Your Haven't purchased any animals yet</h1>
+            :(
+            purchased_animals.map((animal,index)=><AnimalsList key={index}/>)
+           )
+        }
+
         </div>
       </div>
     </div>
