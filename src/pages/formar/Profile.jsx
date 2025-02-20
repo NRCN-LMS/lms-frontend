@@ -20,12 +20,13 @@ import { useLoadUserQuery } from "@/features/api/authApi";
 
 const Profile = () => {
 
-  const {data,isLoading} = useLoadUserQuery(); 
-  
-  const purchased_animals = [1];
+  const {data,isLoading} = useLoadUserQuery();
 
-  if(!isLoading) return <h1>Profile Loading...</h1>;
-  const user =  data;
+
+
+  if(isLoading) return <h1>Profile Loading...</h1>;
+     
+  const userProfile = data?.user;
   
   return (
     <div className="max-w-4xl mx-auto my-24 px-4">
@@ -34,7 +35,7 @@ const Profile = () => {
         <div className="flex flex-col items-center">
           <Avatar className="h-24 w-24 md:h-32 md:w-32 ">
             <AvatarImage
-              // src={user.photoUrl || "https://github.com/shadcn.png"}
+             src={userProfile?.photoUrl || "https://github.com/shadcn.png"}
               alt="@shadcn"
               className=""
             />
@@ -46,7 +47,7 @@ const Profile = () => {
             <h1 className="font-semibold text-gray-900 dark:text-gray-100">
               Name:-
               <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                {user.name}
+              {userProfile?.name || "Unknown User"}
               </span>
             </h1>
           </div>
@@ -54,7 +55,7 @@ const Profile = () => {
             <h1 className="font-semibold text-gray-900 dark:text-gray-100">
               Email:-
               <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                Demo@gmail.com
+               {userProfile?.email  || "Unknown User"}
               </span>
             </h1>
           </div>
@@ -62,7 +63,7 @@ const Profile = () => {
             <h1 className="font-semibold text-gray-900 dark:text-gray-100">
               Role:-
               <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                Buyer \ Seller
+                {userProfile?.role.toUpperCase()}
               </span>
             </h1>
           </div>
@@ -111,13 +112,13 @@ const Profile = () => {
         </div>
       </div>
       <div>
-        <h1 className="font-medium text-lg">Animals Purchased History</h1>
-        <div className="grid grid-cols-1 sd:grid-cols-2 md:grid-cols-3 gap-4 my-5">
-          {purchased_animals.length === 0 ? (
+        <h1 className="font-medium text-lg items-center">Animals Purchased History</h1>
+        <div className="grid grid-cols-1 sd:grid-cols-3 md:grid-cols-2 gap-4 my-5">
+          {userProfile.enrolledCourses.length === 0 ? (
             <h1> Your Haven't purchased any animals yet</h1>
           ) : (
-            purchased_animals.map((animal, index) => (
-              <AnimalsList key={index} />
+            userProfile.enrolledCourses.map((animalsList) => (
+              <AnimalsList animalsList={animalsList} key={animalsList._id} />
             ))
           )}
         </div>
