@@ -21,6 +21,7 @@ import {
 } from "@/features/api/authApi";
 
 const Profile = () => {
+
   const [name, setName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const { data, isLoading } = useLoadUserQuery();
